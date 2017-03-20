@@ -1,9 +1,10 @@
 $(document).ready(function(){
 	var show_per_page = 2;
 	var number_of_items = $('#paginate tr').length; //Return the number of elements in the jQuery object.
-	var navigation_html = '<a class="previous_link" href="">Prev</a>';
+	var navigation_html = '<a class="first_link" href=""><<</a>';
 	var current_link = 1;
 
+	navigation_html += '<a class="previous_link" href="">Prev</a>';
 
 //Create all the element and asign href link.
 	for (var i = 0; i < number_of_items; i = i + show_per_page) {
@@ -15,6 +16,7 @@ $(document).ready(function(){
 // and $('#page_navigation').html(navigation_html) will create the navigation bar in the html
 // which is located in <div id=page_navigation></div>
 	navigation_html += '<a class="next_link" href="">Next</a>';
+	navigation_html += '<a class="last_link" href="">>></a>';
 	$('#page_navigation').html(navigation_html); //.html() change all the content of elements
 	rowDisplay(0, show_per_page);
 	console.log(navigation_html);
@@ -38,8 +40,17 @@ $(document).ready(function(){
 	$('.previous_link, .next_link').click(function (e) {
 		e.preventDefault();
 		var traverse = $(this).is('.previous_link') ? 'prev' : 'next';
-
 		//Call the ('.page_link').click(function(e)) atfer decide the traverse value
-		$('.page_link.active')[traverse]('.page_link').click(); 
+		console.log(traverse);
+		$('.page_link.active')['next']('.page_link').click(); 
+	});
+
+
+	$('.first_link, .last_link').click(function(e){
+		e.preventDefault();
+		if($(this).is('.first_link')){
+			rowDisplay(0, show_per_page);
+			$('.page_link').removeClass('active').first().addClass('active');
+		}
 	});
 });
