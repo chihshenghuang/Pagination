@@ -1,15 +1,15 @@
 $(document).ready(function(){
-	var show_per_page = 1;
+	var show_per_page = 2;
 	var number_of_items = $('#paginate tr').length; //Return the number of elements in the jQuery object.
 	var navigation_html = '<a class="first_link" href=""><<</a>';
-	var current_link = 1;
+	var total_page = 1;
 
 	navigation_html += '<a class="previous_link" href="">Prev</a>';
 
 //Create all the element and asign href link.
 	for (var i = 0; i < number_of_items; i = i + show_per_page) {
-		navigation_html += '<a class="page_link" href="" data-start="' + i + '" data-end="' + (i + show_per_page) + '">' + (current_link) + '</a>';
-		current_link++;
+		navigation_html += '<a class="page_link" href="" data-start="' + i + '" data-end="' + (i + show_per_page) + '">' + (total_page) + '</a>';
+		total_page++;
 	}
 
 // After all the navigation_html are created, add the Next link 
@@ -41,7 +41,6 @@ $(document).ready(function(){
 		e.preventDefault();
 		var traverse = $(this).is('.previous_link') ? 'prev' : 'next';
 		//Call the ('.page_link').click(function(e)) atfer decide the traverse value
-		console.log(traverse);
 		$('.page_link.active')[traverse]('.page_link').click(); 
 	});
 
@@ -53,8 +52,29 @@ $(document).ready(function(){
 			$('.page_link').removeClass('active').first().addClass('active');
 		}
 		else{
-			rowDisplay(number_of_items-show_per_page, number_of_items);
+			if(number_of_items % show_per_page){
+				rowDisplay(number_of_items - (number_of_items % show_per_page), number_of_items);
+			}
+			else{
+				rowDisplay(number_of_items - show_per_page, number_of_items);
+			}
 			$('.page_link').removeClass('active').last().addClass('active');
 		}
 	});
+
+	
+	$("input[type='submit']").click(function(e){
+		var page = $("input[type='search']").val();
+		if((page < total_page) && (page > 0)){
+			rowDisplay((page * show_per_page) - show_per_page, page * show_per_page);
+		}
+		
+		else{
+			alert("Please input the correct page");
+		}
+		
+	});
+	
 });
+
+

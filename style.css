@@ -25,3 +25,8 @@
 #page_navigation a:hover:not(.active){
 	background-color: #ddd;
 }
+
+.search{
+	margin: 2px 2px;
+	padding: 8px 16px;
+}
