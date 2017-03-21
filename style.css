@@ -27,6 +27,8 @@
 }
 
 .search{
-	margin: 2px 2px;
+	margin: 10px 2px;
 	padding: 8px 16px;
+	border-radius: 5px;
 }
+

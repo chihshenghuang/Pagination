@@ -33,8 +33,7 @@ $(document).ready(function(){
 		$(this).addClass('active');
 		var IndexData = $(this).data();
 		console.log(IndexData);
-		rowDisplay(IndexData.start, IndexData.end);
-	
+		rowDisplay(IndexData.start, IndexData.end);	
 	}).first().addClass('active');  //.first() constructs a new jquery object from the first element in that set, and add the element to active class. This is for page show class with active at first time.
 
 	$('.previous_link, .next_link').click(function (e) {
@@ -44,12 +43,11 @@ $(document).ready(function(){
 		$('.page_link.active')[traverse]('.page_link').click(); 
 	});
 
-
 	$('.first_link, .last_link').click(function(e){
 		e.preventDefault();
 		if($(this).is('.first_link')){
 			rowDisplay(0, show_per_page);
-			$('.page_link').removeClass('active').first().addClass('active');
+			
 		}
 		else{
 			if(number_of_items % show_per_page){
@@ -61,12 +59,15 @@ $(document).ready(function(){
 			$('.page_link').removeClass('active').last().addClass('active');
 		}
 	});
-
 	
 	$("input[type='submit']").click(function(e){
 		var page = $("input[type='search']").val();
+		var data = page * show_per_page;
+
 		if((page < total_page) && (page > 0)){
 			rowDisplay((page * show_per_page) - show_per_page, page * show_per_page);
+			$('.page_link').removeClass('active');
+			$('a[data-end="' + data + '"]').addClass('active');
 		}
 		
 		else{
