@@ -1,5 +1,5 @@
 $(document).ready(function(){
-	var show_per_page = 2;
+	var show_per_page = 1;
 	var number_of_items = $('#paginate tr').length; //Return the number of elements in the jQuery object.
 	var navigation_html = '<a class="first_link" href=""><<</a>';
 	var current_link = 1;
@@ -42,7 +42,7 @@ $(document).ready(function(){
 		var traverse = $(this).is('.previous_link') ? 'prev' : 'next';
 		//Call the ('.page_link').click(function(e)) atfer decide the traverse value
 		console.log(traverse);
-		$('.page_link.active')['next']('.page_link').click(); 
+		$('.page_link.active')[traverse]('.page_link').click(); 
 	});
 
 
@@ -51,6 +51,10 @@ $(document).ready(function(){
 		if($(this).is('.first_link')){
 			rowDisplay(0, show_per_page);
 			$('.page_link').removeClass('active').first().addClass('active');
+		}
+		else{
+			rowDisplay(number_of_items-show_per_page, number_of_items);
+			$('.page_link').removeClass('active').last().addClass('active');
 		}
 	});
 });

@@ -6,7 +6,7 @@
 }
 
 #page_navigation a{
-	color:green;
+	color:#4C87AF;
 	float:left;
 	padding: 8px 16px;
 	border-radius: 5px;
@@ -17,7 +17,7 @@
 }
 
 #page_navigation a.active{
-	background-color: #4CAF50;
+	background-color: #4C76AF;
 	color:white;
 	border-radius: 5px;
 }
