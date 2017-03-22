@@ -1,5 +1,5 @@
 $(document).ready(function(){
-	var show_per_page = 3;
+	var show_per_page = 1;
 	var number_of_items = $('#paginate tr').length; //Return the number of elements in the jQuery object.
 	var navigation_html = '<a class="first_link" href=""><<</a>';
 	var total_page = 1;
