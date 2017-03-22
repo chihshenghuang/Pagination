@@ -1,12 +1,46 @@
 $(document).ready(function(){
 	var show_per_page = 1;
-	var number_of_items = $('#paginate tr').length; //Return the number of elements in the jQuery object.
+	//var number_of_items = $('#paginate tr').length; //Return the number of elements in the jQuery object.
+	var number_of_items = 1;
 	var navigation_html = '<a class="first_link" href=""><<</a>';
 	var total_page = 1;
+	var items = '<table id="paginate" id="table1" border="'+1+'">';
 
+
+	$('#itemsNumInput').click(function(e){
+		number_of_items = $('#itemsNum').val();
+
+		items = '<table id="paginate" id="table1" border="'+1+'">';
+		
+		for (var i = 1; i <= number_of_items; i++){
+			items += '<tr>' + '<td>' + i + '</td>' + '<td>' + 'Item' + i +'</td>' + '</tr>'; 
+		}
+		items += '</table>';
+		$('#paginate').html(items);
+
+		navigation_html = '<a class="first_link" href=""><<</a>';
+		navigation_html += '<a class="previous_link" href="">Prev</a>';	
+		total_page = 1;
+		for (var i = 0; i < number_of_items; i = i + show_per_page) {
+			navigation_html += '<a class="page_link" href="" data-start="' + i + '" data-end="' + (i + show_per_page) + '">' + (total_page) + '</a>';
+			total_page++;
+		}
+		
+		navigation_html += '<a class="next_link" href="">Next</a>';
+		navigation_html += '<a class="last_link" href="">>></a>';
+		$('#page_navigation').html(navigation_html); //.html() change all the content of elements
+		rowDisplay(0, show_per_page);
+		$('.page_link').first().addClass('active');
+	});
+	
+	for (var i = 1; i <= number_of_items; i++){
+		items += '<tr>' + '<td>' + i + '</td>' + '<td>' + 'Item' + i +'</td>' + '</tr>'; 
+	}
+	items += '</table>';
+	$('#paginate').html(items);
 	navigation_html += '<a class="previous_link" href="">Prev</a>';
 
-//Create all the element and asign href link.
+// Create all the element and asign href link.
 	for (var i = 0; i < number_of_items; i = i + show_per_page) {
 		navigation_html += '<a class="page_link" href="" data-start="' + i + '" data-end="' + (i + show_per_page) + '">' + (total_page) + '</a>';
 		total_page++;
@@ -37,6 +71,7 @@ $(document).ready(function(){
 		console.log(IndexData);
 		rowDisplay(IndexData.start, IndexData.end);	
 	});
+	
 	$('.page_link').first().addClass('active');  //.first() constructs a new jquery object from the first element in that set, and add the element to active class. This is for page show class with active at first time.
 
 	$(document).on('click', '.previous_link, .next_link', function(e){
@@ -69,8 +104,8 @@ $(document).ready(function(){
 	});
 
 // Search Function
-	$("input[type='submit']").click(function(e){
-		var page = $("input[type='search']").val();
+	$('#searchSubmit').click(function(e){
+		var page = $('#searchInput').val();
 		var data = page * show_per_page;
 
 		if((page < total_page) && (page > 0)){

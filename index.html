@@ -6,61 +6,29 @@
 <script src="main.js"></script>
 </head>
 <body>
-
-<table id="paginate" id="table1" border="1">
-    <tr>
-		<td>1</td>
-		<td>Item 1</td>
-	</tr>
-	<tr>
-		<td>2</td>
-		<td>Item 2</td>
-	</tr>
-	<tr>
-		<td>3</td>
-		<td>Item 3</td>
-	</tr>
-	<tr>
-		<td>4</td>
-		<td>Item 4</td>
-	<tr>
-		<td>5</td>
-		<td>Item 5</td>
-	</tr>
-	<tr>
-		<td>6</td>
-		<td>Item 6</td>
-	</tr>
-	<tr>
-		<td>7</td>
-		<td>Item 7</td>
-	</tr>
-	<tr>
-		<td>8</td>
-		<td>Item 8</td>
-	</tr>
-</table>
-
+<div id="paginate"></div>
 <div id="page_navigation"></div>
 
 <div class="search">
-	<input type="search" placeholder="Search Page">
-	<input type="submit" value="Search">
+	<input id="searchInput" type="search" placeholder="Search Page">
+	<input id="searchSubmit" type="submit" value="Search">
 </div>
 
+<div>
+<label>Items show per page</label>
 <select id="page_per_show" name="page_per_show">
 	<option selected disabled>Show per page</option>
 	<option value=1>1</option>
 	<option value=2>2</option>
 	<option value=3>3</option>
 </select>
+</div>
 
-<script>
-//	$('#page_per_show').change(function(e){
-		//alert($('#page_per_show option:selected').val());
-//	});
-</script>
-
+<div>
+<label>Items number</label>
+	<input id="itemsNum" type="input">
+	<input id="itemsNumInput" type="submit" value="Submit">
+</div>
 
 
 </body>
