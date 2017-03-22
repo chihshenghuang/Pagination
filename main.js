@@ -1,5 +1,5 @@
 $(document).ready(function(){
-	var show_per_page = 2;
+	var show_per_page = 3;
 	var number_of_items = $('#paginate tr').length; //Return the number of elements in the jQuery object.
 	var navigation_html = '<a class="first_link" href=""><<</a>';
 	var total_page = 1;
@@ -26,30 +26,37 @@ $(document).ready(function(){
 	function rowDisplay(startIndex, endIndex) {
 		$('#paginate tr').hide().slice(startIndex, endIndex).show();
 	}
-	
-	$('.page_link').click(function(e){
+
+
+// Must bind with document to avoid the new '.page_link' can't have click event
+	$(document).on('click', '.page_link', function(e){
 		e.preventDefault(); //Cancel the default action when the method is called
 		$('.active').removeClass('active');
 		$(this).addClass('active');
 		var IndexData = $(this).data();
 		console.log(IndexData);
 		rowDisplay(IndexData.start, IndexData.end);	
-	}).first().addClass('active');  //.first() constructs a new jquery object from the first element in that set, and add the element to active class. This is for page show class with active at first time.
+	});
+	$('.page_link').first().addClass('active');  //.first() constructs a new jquery object from the first element in that set, and add the element to active class. This is for page show class with active at first time.
 
-	$('.previous_link, .next_link').click(function (e) {
+	$(document).on('click', '.previous_link, .next_link', function(e){
 		e.preventDefault();
 		var traverse = $(this).is('.previous_link') ? 'prev' : 'next';
 		//Call the ('.page_link').click(function(e)) atfer decide the traverse value
 		$('.page_link.active')[traverse]('.page_link').click(); 
 	});
 
-	$('.first_link, .last_link').click(function(e){
+// First, Last Function
+	$(document).on('click', '.first_link, .last_link', function(e){
 		e.preventDefault();
+		
 		if($(this).is('.first_link')){
+			console.log('show_per_page in the first_link', show_per_page);
 			rowDisplay(0, show_per_page);
-			
+			$('.page_link').removeClass('active').first().addClass('active');
 		}
 		else{
+			// Tow conditions to avoid the wrong boundary condtion in last_link 
 			if(number_of_items % show_per_page){
 				rowDisplay(number_of_items - (number_of_items % show_per_page), number_of_items);
 			}
@@ -58,8 +65,10 @@ $(document).ready(function(){
 			}
 			$('.page_link').removeClass('active').last().addClass('active');
 		}
+		
 	});
-	
+
+// Search Function
 	$("input[type='submit']").click(function(e){
 		var page = $("input[type='search']").val();
 		var data = page * show_per_page;
@@ -75,7 +84,25 @@ $(document).ready(function(){
 		}
 		
 	});
-	
+
+	$('#page_per_show').change(function(e){
+		e.preventDefault();
+		// The value get from the jQuery is not int, so use the parseInt to convert
+		show_per_page = parseInt($('#page_per_show option:selected').val());
+		navigation_html = '<a class="first_link" href=""><<</a>';
+		navigation_html += '<a class="previous_link" href="">Prev</a>';	
+		total_page = 1;
+		for (var i = 0; i < number_of_items; i = i + show_per_page) {
+			navigation_html += '<a class="page_link" href="" data-start="' + i + '" data-end="' + (i + show_per_page) + '">' + (total_page) + '</a>';
+			total_page++;
+		}
+		navigation_html += '<a class="next_link" href="">Next</a>';
+		navigation_html += '<a class="last_link" href="">>></a>';
+		$('#page_navigation').html(navigation_html); //.html() change all the content of elements
+		rowDisplay(0, show_per_page);
+		$('.page_link').first().addClass('active');
+	});
+
 });
 
 
